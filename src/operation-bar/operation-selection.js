@@ -1,5 +1,4 @@
 import React, {
-    useContext,
     useMemo
 } from 'react';
 import {
@@ -13,8 +12,11 @@ import map from 'lodash/map';
 import isEmpty from 'lodash/isEmpty';
 import { Icon } from '../icon';
 import { IconButton } from '../icon-button';
-import { EditorContext } from '../editor-context';
-import { useSetEditingMode } from '../state';
+import {
+    useImageEditorConfigAllowedAdjustmentOperations,
+    useImageEditorConfigAllowedTransformOperations,
+    useSetEditingMode
+} from '../state';
 
 const operations = {
     transform: [
@@ -68,10 +70,8 @@ const ModeButton = styled(TouchableOpacity)`
 `;
 
 export const OperationSelection = () => {
-    const {
-        allowedTransformOperations,
-        allowedAdjustmentOperations
-    } = useContext(EditorContext);
+    const allowedTransformOperations = useImageEditorConfigAllowedTransformOperations();
+    const allowedAdjustmentOperations = useImageEditorConfigAllowedAdjustmentOperations();
 
     const isTransformOnly = !isEmpty(allowedTransformOperations) &&
         isEmpty(allowedAdjustmentOperations);

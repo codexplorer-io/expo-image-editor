@@ -191,10 +191,94 @@ export const useImageEditorState = createStateHook(Store, {
     }) => imageEditorState
 });
 
-export const useImageEditorConfig = createStateHook(Store, {
+export const useImageEditorConfigMode = createStateHook(Store, {
     selector: ({
-        imageEditorState: { config }
-    }) => config
+        imageEditorState: {
+            config: {
+                mode = EditorMode.Full
+            }
+        }
+    }) => mode
+});
+
+export const useImageEditorConfigShouldThrottleBlur = createStateHook(Store, {
+    selector: ({
+        imageEditorState: {
+            config: {
+                shouldThrottleBlur = true
+            }
+        }
+    }) => shouldThrottleBlur
+});
+
+export const useImageEditorConfigMinimumCropDimensions = createStateHook(Store, {
+    selector: ({
+        imageEditorState: {
+            config: {
+                minimumCropDimensions = { width: 0, height: 0 }
+            }
+        }
+    }) => minimumCropDimensions
+});
+
+export const useImageEditorConfigFixedCropAspectRatio = createStateHook(Store, {
+    selector: ({
+        imageEditorState: {
+            config: {
+                fixedCropAspectRatio = 1.6
+            }
+        }
+    }) => fixedCropAspectRatio
+});
+
+export const useImageEditorConfigIsAspectRatioLocked = createStateHook(Store, {
+    selector: ({
+        imageEditorState: {
+            config: {
+                isAspectRatioLocked = false
+            }
+        }
+    }) => isAspectRatioLocked
+});
+
+export const useImageEditorConfigAllowedTransformOperations = createStateHook(Store, {
+    selector: ({
+        imageEditorState: {
+            config: {
+                allowedTransformOperations
+            }
+        }
+    }) => allowedTransformOperations
+});
+
+export const useImageEditorConfigAllowedAdjustmentOperations = createStateHook(Store, {
+    selector: ({
+        imageEditorState: {
+            config: {
+                allowedAdjustmentOperations
+            }
+        }
+    }) => allowedAdjustmentOperations
+});
+
+export const useImageEditorConfigOnEditingComplete = createStateHook(Store, {
+    selector: ({
+        imageEditorState: {
+            config: {
+                onEditingComplete
+            }
+        }
+    }) => onEditingComplete
+});
+
+export const useImageEditorConfigImageUri = createStateHook(Store, {
+    selector: ({
+        imageEditorState: {
+            config: {
+                imageUri
+            }
+        }
+    }) => imageUri
 });
 
 export const useInitializeNavigation = () => useActions().initializeNavigation;

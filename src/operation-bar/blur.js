@@ -1,5 +1,4 @@
 import React, {
-    useContext,
     useEffect,
     useRef,
     useState
@@ -10,12 +9,12 @@ import { manipulateAsync, FlipType } from 'expo-image-manipulator';
 import * as FileSystem from 'expo-file-system';
 import throttle from 'lodash/throttle';
 import { IconButton } from '../icon-button';
-import { EditorContext } from '../editor-context';
 import {
     EditingMode,
     useGlContext,
     useImageBounds,
     useImageData,
+    useImageEditorConfigShouldThrottleBlur,
     useSetEditingMode,
     useSetGlContext,
     useSetImageData,
@@ -131,7 +130,7 @@ export const Blur = () => {
     const setGLContext = useSetGlContext();
     const imageBounds = useImageBounds();
 
-    const { shouldThrottleBlur } = useContext(EditorContext);
+    const shouldThrottleBlur = useImageEditorConfigShouldThrottleBlur();
 
     const [sliderValue, setSliderValue] = useState(15);
     const [blur, setBlur] = useState(15);

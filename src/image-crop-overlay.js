@@ -1,5 +1,4 @@
 import React, {
-    useContext,
     useEffect,
     useRef,
     useState
@@ -15,11 +14,13 @@ import endsWith from 'lodash/endsWith';
 import startsWith from 'lodash/startsWith';
 import map from 'lodash/map';
 import includes from 'lodash/includes';
-import { EditorContext } from './editor-context';
 import {
     useAccumulatedPan,
     useCropSize,
     useImageBounds,
+    useImageEditorConfigFixedCropAspectRatio,
+    useImageEditorConfigIsAspectRatioLocked,
+    useImageEditorConfigMinimumCropDimensions,
     useSetAccumulatedPan,
     useSetCropSize
 } from './state';
@@ -87,11 +88,9 @@ export const ImageCropOverlay = () => {
     const imageBounds = useImageBounds();
     const accumulatedPan = useAccumulatedPan();
     const setAccumluatedPan = useSetAccumulatedPan();
-    const {
-        fixedAspectRatio,
-        isAspectRatioLocked,
-        minimumCropDimensions
-    } = useContext(EditorContext);
+    const fixedAspectRatio = useImageEditorConfigFixedCropAspectRatio();
+    const isAspectRatioLocked = useImageEditorConfigIsAspectRatioLocked();
+    const minimumCropDimensions = useImageEditorConfigMinimumCropDimensions();
 
     const [animatedCropSize] = useState({
         width: new Animated.Value(cropSize.width),

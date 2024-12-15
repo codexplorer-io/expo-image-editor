@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import {
     Appbar,
     AppbarAction,
@@ -11,9 +11,11 @@ import {
     useImageData,
     useSetIsProcessing,
     EditingMode,
-    EditorMode
+    EditorMode,
+    useImageEditorConfigMode,
+    useCloseImageEditor,
+    useImageEditorConfigOnEditingComplete
 } from './state';
-import { EditorContext } from './editor-context';
 import { usePerformCrop } from './operation-bar/operations/use-perform-crop';
 
 export const HeaderBar = () => {
@@ -21,11 +23,9 @@ export const HeaderBar = () => {
     const setEditingMode = useSetEditingMode();
     const imageData = useImageData();
     const setIsProcessing = useSetIsProcessing();
-    const {
-        mode,
-        onCloseEditor,
-        onEditingComplete
-    } = useContext(EditorContext);
+    const mode = useImageEditorConfigMode();
+    const onEditingComplete = useImageEditorConfigOnEditingComplete();
+    const closeImageEditor = useCloseImageEditor();
 
     const performCrop = usePerformCrop();
 
@@ -40,13 +40,13 @@ export const HeaderBar = () => {
 
         setIsProcessing(false);
         onEditingComplete?.(imageData);
-        onCloseEditor?.();
+        closeImageEditor();
     };
 
     const canClose = mode === EditorMode.CropOnly || editingMode === EditingMode.Select;
     const onPressBack = () => {
         if (canClose) {
-            onCloseEditor?.();
+            closeImageEditor();
             return;
         }
 
@@ -59,14 +59,14 @@ export const HeaderBar = () => {
     useEffect(() => {
         if (mode === EditorMode.CropOnly && imageData.uri && editingMode === EditingMode.Select) {
             onEditingComplete?.(imageData);
-            onCloseEditor?.();
+            closeImageEditor();
         }
     }, [
         mode,
         imageData,
         editingMode,
         onEditingComplete,
-        onCloseEditor
+        closeImageEditor
     ]);
 
     return (
